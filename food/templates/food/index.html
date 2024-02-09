@@ -13,6 +13,7 @@
       </div>
       <div class="col-md-2 mt-4">
         <a href="{% url 'food:detail' item.id %}" class="btn btn-success">Details</a>
+        <a href="{% url 'food:edit_item' item.id %}" class="btn btn-primary mt-2">Update</a>
       </div>
     </div>
   {% endfor %}
