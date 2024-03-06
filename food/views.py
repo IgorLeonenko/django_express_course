@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Item
 from .forms import ItemForm
 
@@ -17,6 +18,7 @@ def detail(request, item_id):
     }
     return render(request, 'food/detail.html', context)
 
+@login_required
 def create_item(request):
     form = ItemForm(request.POST or None)
     if form.is_valid():
@@ -24,6 +26,7 @@ def create_item(request):
         return redirect('food:index')
     return render(request, 'food/item-form.html', {'form': form})
 
+@login_required
 def edit_item(request, item_id):
     item = Item.objects.get(pk=item_id)
     form = ItemForm(request.POST or None, instance=item)
@@ -36,6 +39,7 @@ def edit_item(request, item_id):
     }
     return render(request, 'food/item-form.html', context)
 
+@login_required
 def delete_item(request, item_id):
     item = Item.objects.get(pk=item_id)
     if request.method == 'POST':

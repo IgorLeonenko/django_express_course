@@ -14,11 +14,24 @@
       <nav class="navbar navbar-dark bg-dark">
         <a href="#" class="navbar-brand ms-4">Food App</a>
         <div class="navbar">
-          <a href="{% url 'food:create_item' %}" class="link-primary me-2">Add Item</a>
-          <a href="#" class="link-primary me-2">Delete Item</a>
-          <a href="#" class="link-primary me-2">View Item</a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'food:create_item' %}" class="link-primary me-2">Add Item</a>
+            <a href="{% url 'profile' %}" class="link-primary me-2">Profile</a>
+            <a href="{% url 'logout' %}" class="link-primary me-2">Logout</a>
+          {% else %}
+            <a href="{% url 'register' %}" class="link-primary me-2">Register</a>
+            <a href="{% url 'login' %}" class="link-primary me-2">Login</a>
+          {% endif %}
         </div>
       </nav>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
 
       {% block body %}
       {% endblock %}
